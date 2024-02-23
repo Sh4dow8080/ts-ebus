@@ -21,7 +21,7 @@ jobs:
         run: npm ci
 
       - name: Set version
-        run: npx nbgv-setversion
+        run: npm version $(npx nbgv get-version -v NpmPackageVersion) --no-git-tag-version --allow-same-version
 
       - name: Build
         run: npm run build
