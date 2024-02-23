@@ -4,10 +4,10 @@ type Subscriber = {
 	};
 };
 
-type Class = { new (...args: any): any };
+type Class = { new(...args: any): any };
 type InstanceOfClass = InstanceType<Class>;
 type Unsubscribe = () => void;
-
+type Listener<TEvent extends Class> = (event: InstanceType<TEvent>) => void;
 interface IEBus {
 	on<TEvent extends Class>(
 		event: TEvent,
@@ -22,7 +22,7 @@ export class EBus implements IEBus {
 
 	public on<TEvent extends Class>(
 		event: TEvent,
-		listener: (event: InstanceType<TEvent>) => void
+		listener: Listener<TEvent>
 	): Unsubscribe {
 		const eventName = event.prototype.constructor.name;
 		const eventId = this.getNextEventId();
